@@ -3,11 +3,11 @@ import MainScene from "./scenes/MainScene.js";
 class P extends Phaser.Scene {
     preload() {
         this.load.path = 'assets/'
-        this.load.aseprite('grundo', 'images/grundo.png', 'images/grundo.json');
+        this.load.aseprite('ob', 'images/ob.png', 'images/ob.json');
     }
 
     create() {
-        this.anims.createFromAseprite('grundo');
+        this.anims.createFromAseprite('ob');
         
         this.scene.switch('main');
     }
@@ -16,8 +16,8 @@ class P extends Phaser.Scene {
 const game = new Phaser.Game({
     scene: [P, MainScene],
     scale: {
-        width: 170,
-        height: 128,
+        width: 320,
+        height: 180,
         zoom: Phaser.Scale.ZOOM_4X
     },
     physics: {
