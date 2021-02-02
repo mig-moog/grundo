@@ -2,18 +2,21 @@ import MainScene from "./scenes/MainScene.js";
 
 class P extends Phaser.Scene {
     preload() {
-        this.load.path = 'assets/'
+        this.load.setPath('assets/');
         this.load.aseprite('ob', 'images/ob.png', 'images/ob.json');
+        this.load.image('toptooth', 'images/toptooth.png');
+        this.load.image('btmtooth', 'images/btmtooth.png');
     }
 
     create() {
         this.anims.createFromAseprite('ob');
-        
+
         this.scene.switch('main');
     }
 }
 
 const game = new Phaser.Game({
+    title: 'Toof',
     scene: [P, MainScene],
     scale: {
         width: 320,
@@ -24,7 +27,7 @@ const game = new Phaser.Game({
         default: 'arcade',
         arcade: {
             debug: true,
-            // gravity: 50
+            gravity: { y: 100 }
         }
     }
 });
