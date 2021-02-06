@@ -16,8 +16,7 @@ export default class Ob extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.setMaxVelocity(200, 350)
-            .setBodySize(8, 16);
+        this.setBodySize(10, 16).setBounceY(0.65).setMaxVelocity(250);
     }
 
     preUpdate(t, dt) {
@@ -29,11 +28,11 @@ export default class Ob extends Phaser.Physics.Arcade.Sprite {
         } else if (k.left.isDown) {
             this/* .play('walk', true) */
                 .setFlipX(true)
-                .setVelocityX(-50);
+                .setVelocityX(-50.5);
         } else if (k.right.isDown) {
             this/* .play('walk', true) */
                 .setFlipX(false)
-                .setVelocityX(50);
+                .setVelocityX(50.5);
         } else {
             this/* .play('idle', true) */
                 .setVelocityX(0);
