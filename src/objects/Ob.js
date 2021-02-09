@@ -1,4 +1,3 @@
-// The truest grundo you'll ever see
 export default class Ob extends Phaser.Physics.Arcade.Sprite {
     keys;
 
@@ -16,7 +15,10 @@ export default class Ob extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.setBodySize(10, 16).setBounceY(0.65).setMaxVelocity(250);
+        this.setBodySize(10, 16)
+            .setBounceY(0.65)
+            .setMaxVelocity(250)
+            .setName('ob');
     }
 
     preUpdate(t, dt) {
@@ -48,6 +50,17 @@ export default class Ob extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(-125);
         }
 
+        this.frameCheck();
         super.preUpdate(t, dt);
+    }
+
+    frameCheck() {
+        if (this.body.touching.none && this.body.velocity.y < 0) {
+            this.setFrame(1);
+        } else if (this.body.acceleration.y > 0) {
+            this.setFrame(2);
+        } else {
+            this.setFrame(0);
+        }
     }
 }
