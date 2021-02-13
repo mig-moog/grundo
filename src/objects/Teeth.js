@@ -1,20 +1,32 @@
-export default class Teeth extends Phaser.Physics.Arcade.Group {
-
-    /**
-     * @param {Phaser.Scene} scn 
-     */
+export class Teeth extends Phaser.Physics.Arcade.Group {
+    /**@param {Phaser.Scene} scn */
     constructor(scn) {
-        super(scn.physics.world, scn, [], { classType: Phaser.GameObjects.Sprite });
+        super(scn.physics.world, scn);
 
         for (let i = 0; i < 5; i++) {
-            this.create(15 + (i * 70), 0, 'toptooth', 0, true, true)
-            this.create(15 + (i * 70), 180, 'btmtooth', 0, true, true);
+            const pair = this.createMultiple([{
+                key: 'toptooth',
+                setXY: { x: 15 + (i * 70), y: 0 }
+            }, {
+                key: 'btmtooth',
+                setXY: { x: 15 + (i * 70), y: 180 }
+            }]);
+
+            pair[0].setName('top');
+            pair[1].setName('btm');
         }
 
-        this.children.iterate(e => {
+        this.children.iterate((e, ix) => {
+            e.parent = this;
+            e.ix = this;
+
             e.body
-                .setAllowGravity(false)
-                .setImmovable(true);
+                .setImmovable(true)
+                .setAllowGravity(false);
         });
+    }
+
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);
     }
 }

@@ -1,4 +1,4 @@
-export default class Ob extends Phaser.Physics.Arcade.Sprite {
+export class Ob extends Phaser.Physics.Arcade.Sprite {
     keys;
 
     /**
