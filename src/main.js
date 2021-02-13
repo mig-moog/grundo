@@ -1,4 +1,4 @@
-import MainScene from "./scenes/MainScene.js";
+import { MainScene } from "./scenes/MainScene.js";
 
 class P extends Phaser.Scene {
     preload() {

@@ -1,4 +1,6 @@
 export class Teeth extends Phaser.Physics.Arcade.Group {
+    pairs = [];
+    
     /**@param {Phaser.Scene} scn */
     constructor(scn) {
         super(scn.physics.world, scn);
@@ -14,6 +16,8 @@ export class Teeth extends Phaser.Physics.Arcade.Group {
 
             pair[0].setName('top');
             pair[1].setName('btm');
+
+            this.pairs.push(pair);
         }
 
         this.children.iterate((e, ix) => {
@@ -24,9 +28,5 @@ export class Teeth extends Phaser.Physics.Arcade.Group {
                 .setImmovable(true)
                 .setAllowGravity(false);
         });
-    }
-
-    preUpdate(t, dt) {
-        super.preUpdate(t, dt);
     }
 }

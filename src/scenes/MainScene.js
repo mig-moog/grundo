@@ -1,14 +1,14 @@
 import { Ob } from "../objects/Ob.js";
 import { Teeth } from "../objects/Teeth.js";
 
-export default class MainScene extends Phaser.Scene {
+export class MainScene extends Phaser.Scene {
     /**@type {Ob} the incredible */
     ob;
     /**@type {Phaser.Physics.Arcade.StaticGroup} */
     teethLimits;
-    /**@type {Phaser.Types.Input.Keyboard.CursorKeys} */
-    keys;
+    /**@type {Teeth} */
     teeth;
+    /**@type {Phaser.GameObjects.Zone} */
     stopZone;
 
     debugText;
@@ -20,16 +20,17 @@ export default class MainScene extends Phaser.Scene {
         this.teeth = new Teeth(this);
         this.stopZone = this.add.zone(0, center.y, this.scale.width, 1).setOrigin(0, 0);
         this.physics.add.existing(this.stopZone, true);
-
-        /* for (let i = 0; i < 5; i++) {
-            this.teeth.push(new Teeth(this, 15 + (i * 70)));
-        } */
+        this.teethLimits = this.physics.add.staticGroup([
+            // 24 bc it's half of a tooth's width plus 1 more for space from teethLimits
+            this.add.zone(0, -24, this.scale.width, 1).setOrigin(0, 0),
+            this.add.zone(0, this.scale.height + 24, this.scale.width, 1).setOrigin(0, 0)
+        ]);
 
         this.physics.add.collider(this.ob, this.teeth, (ob, tooth) => {
             if (tooth.name === 'btm') {
                 tooth.setVelocityY(-50);
             } else {
-
+                tooth.setVelocityY(50);
             }
         });
         this.physics.add.collider(this.stopZone, this.teeth, (stopZone, tooth) => {
@@ -37,17 +38,21 @@ export default class MainScene extends Phaser.Scene {
             if (tooth.name === 'btm') {
                 tooth.setVelocityY(50);
             } else {
-
+                tooth.setVelocityY(-50);
+            }
+        });
+        this.physics.add.collider(this.teethLimits, this.teeth, (limit, tooth) => {
+            tooth.body.stop();
+            if (tooth.name === 'btm') {
+                tooth.setY(180);
+            } else {
+                tooth.setY(0);
             }
         });
     }
 
     update(t, dt) {
-        /* for (const tooth in this.teeth) {
-            if (tooth.y <= this.scale.width / 2 && tooth.name === 'btm') {
-                tooth.body.stop();
-            }
-        } */
+
     }
 
     constructor() { super('main'); }
